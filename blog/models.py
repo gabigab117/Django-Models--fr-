@@ -3,6 +3,11 @@ from django.utils.text import slugify
 
 
 # Create your models here.
+class Category(models.Model):
+    name = models.CharField(max_length=36)
+    slug = models.SlugField()
+
+
 class BlogPost(models.Model):
     # pour CharField il faut absolument définir une longueur en param
     title = models.CharField(max_length=100)
