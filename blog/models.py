@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils.text import slugify
 
@@ -9,6 +10,10 @@ class Category(models.Model):
 
 
 class BlogPost(models.Model):
+    # on va relier User à BlogPost (relations plusieurs à 1) avec une foreign key
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    # pour le plusieurs à plusieurs Pas besoin de spécifier le on_delete ==>
+    category = models.ManyToManyField(Category)
     # pour CharField il faut absolument définir une longueur en param
     title = models.CharField(max_length=100)
     # pour transformer title en url on utilise un slug
