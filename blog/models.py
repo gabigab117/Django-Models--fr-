@@ -8,6 +8,13 @@ class Category(models.Model):
     name = models.CharField(max_length=36)
     slug = models.SlugField()
 
+    class Meta:
+        verbose_name = "Catégorie"
+        verbose_name_plural = "Toutes les catégories"
+
+    def __str__(self):
+        return self.name
+
 
 class BlogPost(models.Model):
     # on va relier User à BlogPost (relations plusieurs à 1) avec une foreign key
@@ -31,8 +38,19 @@ class BlogPost(models.Model):
             return "L'article est publié"
         return "L'article est inaccessible"
 
-    def save(self, *args, **kwargs):
+    class Meta:
+        verbose_name = "Article"
+        verbose_name_plural = "Tous les articles"
+        # ordonner en fonction de la date, utiliser le champs date ==>
+        # si on fait ["-date"] on inverse l'ordre
+        ordering = ["date"]
 
+    def __str__(self):
+        # self car je veux retourner le titre des instances
+        return f"{self.title} - {self.date}"
+
+    def save(self, *args, **kwargs):
+        # ici la condition est avant mon super, car on souhaite modifier les slug avant la save
         if not self.slug:
             self.slug = slugify(self.title)
 
