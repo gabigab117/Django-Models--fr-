@@ -1,5 +1,12 @@
 from django.http import HttpResponse, JsonResponse, Http404
+from django.shortcuts import redirect
+
 from blog.models import BlogPost
+
+
+def home(request):
+    return HttpResponse("<h1>Accueil ! ! !</h1>")
+
 
 '''
 def blog_posts(request):
@@ -21,7 +28,7 @@ def blog_posts(request):
     json_response = JsonResponse({"1": "Premer article du blog"})
     json_response.status_code = 202
     return json_response
-    # return JsonResponse({"1": "Premer article du blog"})
+    # return JsonResponse({"1": "Premier article du blog"})
 
 '''
 
@@ -37,3 +44,9 @@ def blog_posts(request):
 
     # on affiche le contenu de l'article si on a réussi à le récupérer
     return HttpResponse(blog_post.content)
+
+
+def blog_posts_redirect(request):
+    # on récupère le name de notre url
+    # je peux faire redirect("https://google.fr") par exemple
+    return redirect("home")
