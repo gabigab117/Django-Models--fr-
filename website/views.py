@@ -1,6 +1,6 @@
 from django.http import HttpResponse, JsonResponse, Http404
 from django.shortcuts import redirect, get_object_or_404, render
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 from blog.models import BlogPost
 
@@ -50,3 +50,19 @@ def blog_posts_redirect(request):
 @login_required
 def view_login(request):
     return HttpResponse("<h1>Vous devez être connecté pour voir ça</h1>")
+
+
+# @user_passes_test(lambda u: u.username == "gabri")
+# lambda argument: expression
+@user_passes_test(lambda u: "Modérateurs" in [group.name for group in u.groups.all()])
+def view_login_cond(request):
+    return HttpResponse("<h1>Restreindre avec une condition</h1>")
+
+
+'''
+def email_check(user):
+    return user.email.endswith('@example.com')
+
+@user_passes_test(email_check)
+def my_view(request):
+'''

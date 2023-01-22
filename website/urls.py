@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from website.views import blog_posts, home, blog_posts_redirect, view_login
+from website.views import blog_posts, home, blog_posts_redirect, view_login, view_login_cond
 
 
 # attention à l'odre des chemins, si on met le <str:slug> en premier django ne s'occupera pas de blog/, loginview/...
@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('blog/', blog_posts_redirect, name="blog-index"),
     path('loginview/', view_login, name="vue-login"),
+    path('logincond', view_login_cond, name="login-condition"),
     path('<str:slug>/', blog_posts, name="blog-pasdanslapp"),
     path('blog2/', include('blog.urls')),
 
