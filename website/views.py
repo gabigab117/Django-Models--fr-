@@ -1,5 +1,6 @@
 from django.http import HttpResponse, JsonResponse, Http404
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404, render
+from django.contrib.auth.decorators import login_required
 
 from blog.models import BlogPost
 
@@ -33,20 +34,19 @@ def blog_posts(request):
 '''
 
 
-def blog_posts(request):
-    # récupère l'article avec try (on essaye)
-    try:
-        blog_post = BlogPost.objects.get(pk=1)
-    # si l'article n'existe pas :
-    except BlogPost.DoesNotExist:
-        # raise car on lève une exception
-        raise Http404("L'article #1 n'existe pas...")
+def blog_posts(request, slug):
+    blog_post = get_object_or_404(BlogPost, slug=slug)
 
     # on affiche le contenu de l'article si on a réussi à le récupérer
-    return HttpResponse(blog_post.content)
+    return render(request, "website/test.html", context={"blo_post": blog_post})
 
 
 def blog_posts_redirect(request):
     # on récupère le name de notre url
     # je peux faire redirect("https://google.fr") par exemple
     return redirect("home")
+
+
+@login_required
+def view_login(request):
+    return HttpResponse("<h1>Vous devez être connecté pour voir ça</h1>")
