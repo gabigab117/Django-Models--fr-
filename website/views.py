@@ -38,7 +38,13 @@ def blog_posts(request, slug):
     blog_post = get_object_or_404(BlogPost, slug=slug)
 
     # on affiche le contenu de l'article si on a réussi à le récupérer
-    return render(request, "website/test.html", context={"blo_post": blog_post})
+    return render(request, "website/test.html", context={"blog_post": blog_post})
+
+
+def blo_posts_gabarit(request):
+    posts = BlogPost.objects.filter(pk__in=[1, 2])
+
+    return render(request, "website/gabarit.html", context={"posts": posts})
 
 
 def blog_posts_redirect(request):

@@ -38,6 +38,9 @@ class BlogPost(models.Model):
             return "L'article est publié"
         return "L'article est inaccessible"
 
+    def number_of_words(self):
+        return len(self.content.split())
+
     class Meta:
         verbose_name = "Article"
         verbose_name_plural = "Tous les articles"

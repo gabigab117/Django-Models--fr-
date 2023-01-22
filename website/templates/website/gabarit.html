@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Les Gabarits</title>
+</head>
+<body>
+    {% if posts %}
+    <h1>Le blog contient {{ posts.count }} articles</h1>
+    {% else %}
+    <h1>Le blog ne contient aucun article</h1>
+    {% endif %}
+</body>
+</html>
+
+<! --
+if posts c'est comme en python, car on regarde si posts est vide False, si au moins un elmt True
+Comme le if je peux faire elif
+-->
