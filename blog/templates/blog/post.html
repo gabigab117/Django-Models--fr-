@@ -5,8 +5,13 @@
     <title>{{ blog_post.title }}</title>
 </head>
 <body>
+<a href="{% url 'blog-index' %}">Retour au sommaire</a>
 <h1>Fichier de template : {{ blog_post.title }}</h1>
 <p>{{ blog_post.content }}</p>
 
 </body>
 </html>
+
+<! --
+Ici dans l'url de retour je ne passe pas d'argument car je n'en ai pas dans 'blog-index'
+-->

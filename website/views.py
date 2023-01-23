@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse, Http404
 from django.shortcuts import redirect, get_object_or_404, render
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -34,23 +35,31 @@ def blog_posts(request):
 '''
 
 
-def blog_posts(request, slug):
+def blo_posts(request, slug):
     blog_post = get_object_or_404(BlogPost, slug=slug)
 
     # on affiche le contenu de l'article si on a réussi à le récupérer
     return render(request, "website/test.html", context={"blog_post": blog_post})
 
 
+# variables et conditions (gabarit)
 def blo_posts_gabarit(request):
     posts = BlogPost.objects.filter(pk__in=[1, 2])
 
     return render(request, "website/gabarit.html", context={"posts": posts})
 
 
-def blog_posts_redirect(request):
+# boucles (gabarit)
+def blo_posts_gabarit_boucle(request):
+    posts = BlogPost.objects.all()
+    users = User.objects.all()
+    return render(request, "website/gabaritboucle.html", context={"posts": posts, "users": users})
+
+
+# def blog_posts_redirect(request):
     # on récupère le name de notre url
     # je peux faire redirect("https://google.fr") par exemple
-    return redirect("home")
+    # return redirect("home")
 
 
 @login_required

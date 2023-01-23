@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Le blog</title>
+</head>
+<body>
+
+    {% for post in posts %}
+    <h1>{{ forloop.counter }} {{ post.title }}</h1>
+    {% if forloop.last %}
+    <hr>
+    {% endif %}
+
+    {% endfor %}
+
+    {% for user in users %}
+    <li>{{ user }}</li>
+    {% empty %}
+    <li>Pas d'utilisateurs</li>
+{% endfor %}
+
+</body>
+</html>
+
+<! --
+https://docs.djangoproject.com/en/4.1/ref/templates/builtins/#for
+if forloop.last, lorsqu'on est au dernier article return True. Donc le hr sera exécuté
+while n'existe pas en gabarit Django
+
+On peut se passer du if xs
+                        for x in xs
+En faisant for x in xs
+            afficher exemple x.name
+            empty
+            dsl pas de x.name
+-->
