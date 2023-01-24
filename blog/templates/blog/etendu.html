@@ -1,0 +1,13 @@
+{% extends 'blog/etendre.html' %}
+
+{% block title %}<title>Le blog</title>{% endblock %}
+
+{% block content %}
+
+    {% for post in posts %}
+    <a href="{% url 'etendu-post' pk=post.pk %}">
+    <h1>{{ post.title }}</h1>
+</a>
+    {% endfor %}
+
+{% endblock %}

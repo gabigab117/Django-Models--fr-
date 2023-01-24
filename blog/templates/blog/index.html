@@ -9,7 +9,10 @@
     {% with categories=post.category.count verite="Ons en Bray est le plus beau village de France" %}
     <a href="{% url 'blog-post' slug=post.slug %}">
     <h1>{{forloop.counter}}. {{post.title}} / {{ categories }} catégorie(s) pour cet article.</h1>
+
+        {{ post.number_of_words }} <br />
     </a>
+    <p>{{ post.content|truncatewords:2|striptags|safe }}</p>
     <small> Et au passage {{ verite }}</small> <br />
     <small>Cet article est présent dans {{ categories }} catégorie(s)</small>
     {% endwith %}
@@ -23,5 +26,11 @@ et le slug de ma variable post que je récupère dans ma boucle for
 Le slug ici est un argument, car dans 'blog-post' on a un paramètre slug
 le fait que ma page affiche bien l'article souhaité, c'est parce que je récupère le slug de mon modèle BlogPost dans
 l'url (en argument)
+
+A savoir que je peux écrire mes articles dans Django en utilisant du HTML. J'utilise donc |striptags pour ne pas
+les afficher (si je ne veux plus de mes tags), et si je veux que mon html soit
+interpréter j'utilise le filtre : |safe
+| safe, il faut vraiment être sûr de soi... Car interprêter du code dangereux == Pas cool !
+Si je dois mettre plusieurs safe {% autoescape off %} {% endautoescape %}
 
 -->

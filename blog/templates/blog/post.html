@@ -7,7 +7,8 @@
 <body>
 <a href="{% url 'blog-index' %}">Retour au sommaire</a>
 <h1>Fichier de template : {{ blog_post.title }}</h1>
-<p>{{ blog_post.content }}</p>
+<h1>{{ lowlow }}</h1>
+<p>{{ blog_post.content|safe }}</p>
 
 </body>
 </html>

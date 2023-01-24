@@ -1,7 +1,11 @@
 from django.urls import path
-from blog.views import blog_post, blog_posts
+from blog.views import blog_post, blog_posts, echappement, etendre, etendu, etendupost
 
 urlpatterns = [
     path('', blog_posts, name="blog-index"),
+    path('echap/', echappement, name="echap"),
+    path('etendre/', etendre, name="etendre-template"),
+    path('etendu/', etendu, name="template-etendu"),
+    path('etendupost<str:pk>/', etendupost, name="etendu-post"),
     path('<str:slug>/', blog_post, name="blog-post"),
 ]
