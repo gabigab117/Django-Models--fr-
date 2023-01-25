@@ -21,7 +21,7 @@ from website.views import blo_posts, home, view_login, view_login_cond, blo_post
 # attention à l'odre des chemins, si on met le <str:slug> en premier django ne s'occupera pas de blog/, loginview/...
 urlpatterns = [
     path('', home, name="home"),
-    path('admin/', admin.site.urls),
+    path('admin-secret/', admin.site.urls),
     # path('blog/', blog_posts_redirect, name="blog-index"),
     path('gabarit/', blo_posts_gabarit, name="gabarit"),
     path('gabaritboucle/', blo_posts_gabarit_boucle, name="gabarit-boucle"),

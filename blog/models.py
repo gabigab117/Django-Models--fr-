@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 
 
@@ -38,6 +39,7 @@ class BlogPost(models.Model):
             return "L'article est publié"
         return "L'article est inaccessible"
 
+    @property
     def number_of_words(self):
         return len(self.content.split())
 
@@ -46,11 +48,16 @@ class BlogPost(models.Model):
         verbose_name_plural = "Tous les articles"
         # ordonner en fonction de la date, utiliser le champs date ==>
         # si on fait ["-date"] on inverse l'ordre
-        ordering = ["date"]
+        ordering = ["-date", "-published"]
 
     def __str__(self):
         # self car je veux retourner le titre des instances
         return f"{self.title} - {self.date}"
+
+    # depuis mon instance si je veux la voir dans le site (bouton voir sur le site)
+    def get_absolute_url(self):
+        # name de mon url, et élément kwargs que l'on passe à notre url. Ici dans l'url <str:slug>
+        return reverse("blog-post", kwargs={"slug": self.slug})
 
     def save(self, *args, **kwargs):
         # ici la condition est avant mon super, car on souhaite modifier les slug avant la save

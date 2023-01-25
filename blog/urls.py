@@ -6,6 +6,6 @@ urlpatterns = [
     path('echap/', echappement, name="echap"),
     path('etendre/', etendre, name="etendre-template"),
     path('etendu/', etendu, name="template-etendu"),
-    path('etendupost<str:pk>/', etendupost, name="etendu-post"),
-    path('<str:slug>/', blog_post, name="blog-post"),
+    path('post-pk<str:pk>/', etendupost, name="etendu-post"),
+    path('post-<str:slug>/', blog_post, name="blog-post"),
 ]
