@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from website.views import blo_posts, home, view_login, view_login_cond, blo_posts_gabarit, blo_posts_gabarit_boucle
+from website.views import blo_posts, home, view_login, view_login_cond, blo_posts_gabarit, blo_posts_gabarit_boucle, signup
 
 
 # attention à l'odre des chemins, si on met le <str:slug> en premier django ne s'occupera pas de blog/, loginview/...
@@ -28,6 +28,7 @@ urlpatterns = [
     path('loginview/', view_login, name="vue-login"),
     path('logincond', view_login_cond, name="login-condition"),
     path('blog/', include('blog.urls')),
-    path('<str:slug>/', blo_posts, name="blog-pasdanslapp"),
+    path('signup', signup, name="signup"),
+    path('monslug<str:slug>/', blo_posts, name="blog-pasdanslapp"),
 
 ]

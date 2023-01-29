@@ -3,6 +3,7 @@ from django.http import HttpResponse, JsonResponse, Http404
 from django.shortcuts import redirect, get_object_or_404, render
 from django.contrib.auth.decorators import login_required, user_passes_test
 
+from website.forms import SignupForm
 from blog.models import BlogPost
 
 
@@ -57,9 +58,9 @@ def blo_posts_gabarit_boucle(request):
 
 
 # def blog_posts_redirect(request):
-    # on récupère le name de notre url
-    # je peux faire redirect("https://google.fr") par exemple
-    # return redirect("home")
+# on récupère le name de notre url
+# je peux faire redirect("https://google.fr") par exemple
+# return redirect("home")
 
 
 @login_required
@@ -72,6 +73,26 @@ def view_login(request):
 @user_passes_test(lambda u: "Modérateurs" in [group.name for group in u.groups.all()])
 def view_login_cond(request):
     return HttpResponse("<h1>Restreindre avec une condition</h1>")
+
+
+# vue formulaire signup
+def signup(request):
+    # récupérer les données d'un formulaire (.html) dans la vue:
+    # quel type de méthode effectuée par la request
+    if request.method == "POST":
+        # si method est type POST, on récupère les données envoyées dans la variable POST
+        # POST = dictionnaire qui contient les données qui sont envoyées avec la requête POST
+        # je passe donc un dictionnaire à la class SignupForm
+        form = SignupForm(request.POST)
+        # on vérifie que le formulaire est valide
+
+        if form.is_valid():
+            # retourne le dictionnaire avec les données nettoyées
+            print(form.cleaned_data)
+
+    # créer une instance
+    form = SignupForm()
+    return render(request, "accounts/signup.html", context={"form": form})
 
 
 '''
