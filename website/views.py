@@ -77,21 +77,28 @@ def view_login_cond(request):
 
 # vue formulaire signup
 def signup(request):
+
     # récupérer les données d'un formulaire (.html) dans la vue:
     # quel type de méthode effectuée par la request
     if request.method == "POST":
         # si method est type POST, on récupère les données envoyées dans la variable POST
         # POST = dictionnaire qui contient les données qui sont envoyées avec la requête POST
-        # je passe donc un dictionnaire à la class SignupForm
+        # je passe donc un dictionnaire (qui correspond aux données du formulaire) à la class SignupForm
         form = SignupForm(request.POST)
         # on vérifie que le formulaire est valide
 
         if form.is_valid():
             # retourne le dictionnaire avec les données nettoyées
+            # il faut tjs vérifier avec is valid si je veux afficher les clean data
             print(form.cleaned_data)
+            return HttpResponse("Merci de vous êtes....")
 
-    # créer une instance
-    form = SignupForm()
+    else:
+        # créer une instance (formulaire vide)
+        form = SignupForm()
+
+    # on passe à notre vue le formulaire vide avec else, mais si la méthode POST a été utilisée,
+    # l'utilisateur ne perd pas les données entrées si le is_valid est false
     return render(request, "accounts/signup.html", context={"form": form})
 
 
