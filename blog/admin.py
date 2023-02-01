@@ -51,5 +51,5 @@ class BlogPostAdmin(admin.ModelAdmin):
 
     # par défaut django affiche 100 instances (articles ici) par page dans l'admin
     # je peux modifier ça de cette façon :
-    list_per_page = 3
+    list_per_page = 20
 

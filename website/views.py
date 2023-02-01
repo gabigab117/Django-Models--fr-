@@ -2,13 +2,33 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse, Http404
 from django.shortcuts import redirect, get_object_or_404, render
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.views.generic import TemplateView
 
 from website.forms import SignupForm
 from blog.models import BlogPost
+from django.views import View
+
+'''
+# on va utiliser une vue fondée sur une class, une vue toute simple
+class HomeView(View):
+    title = "Default"
+
+    # méthode qui va procésser les requetes get
+    def get(self, request):
+        return HttpResponse(f"<h1>{self.title}</h1><br><a href='/blog/'> Le Blog</a>")
+'''
 
 
-def home(request):
-    return HttpResponse("<h1>Accueil ! ! !</h1>")
+# avec un templateview on peut retourner un template html
+class HomeView(TemplateView):
+    template_name = "website/indexclass.html"
+    title = "Default"
+
+    # modifier le contexte :
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = self.title
+        return context
 
 
 '''
@@ -77,7 +97,6 @@ def view_login_cond(request):
 
 # vue formulaire signup
 def signup(request):
-
     # récupérer les données d'un formulaire (.html) dans la vue:
     # quel type de méthode effectuée par la request
     if request.method == "POST":

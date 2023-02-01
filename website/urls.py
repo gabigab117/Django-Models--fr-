@@ -15,12 +15,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from website.views import blo_posts, home, view_login, view_login_cond, blo_posts_gabarit, blo_posts_gabarit_boucle, signup
+from website.views import blo_posts, view_login, view_login_cond, blo_posts_gabarit, blo_posts_gabarit_boucle, signup
+from website.views import HomeView
 
 
 # attention à l'odre des chemins, si on met le <str:slug> en premier django ne s'occupera pas de blog/, loginview/...
 urlpatterns = [
-    path('', home, name="home"),
+    # home, vue fondée sur les class. importer HomeView, puis initialiser avec méthode as_view() (on créer une instance)
+    # 1 vue simple :
+    # path('', HomeView.as_view(title="Accueil du site"), name="home"),
+    # avec la même class mais une autre instance en modifiant l'attribut de la class
+    # path('about/', HomeView.as_view(title="A propos"), name="about"),
+    # 2 vue template view
+    path('', HomeView.as_view(title="Accueil du site"), name="home"),
+    path('about/', HomeView.as_view(title="A propos"), name="about"),
+    # ---
     path('admin-secret/', admin.site.urls),
     # path('blog/', blog_posts_redirect, name="blog-index"),
     path('gabarit/', blo_posts_gabarit, name="gabarit"),
