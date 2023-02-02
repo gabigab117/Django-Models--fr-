@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Le Blog</title>
+</head>
+<body>
+<h1>Mon super blog</h1>
+{% for post in articles %}
+<a href="{% url 'blog-post' slug=post.slug %}">
+
+  <h3>{{ post.title }}</h3>
+</a>
+<p>{{ post.content|truncatewords:20|safe }}</p>
+
+{% endfor %}
+
+</body>
+</html>
+
+<!--
+object_list c'est la variable passée au context qui content nos objets. C'est le nom de var par def
+On peut aussi mettre nommodel_list (minuscule) ==> blogpost_list
+ou modifier dans notre class ListView le context_object_name (ici articles)
+
+-->

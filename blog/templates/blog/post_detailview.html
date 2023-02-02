@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ post.title }}</title>
+</head>
+<body>
+
+<a href="{% url 'blog-index' %}">Retour au sommaire</a>
+<h1>{{ post.title }}</h1>
+<p>{{ post.content|safe }}</p>
+</body>
+</html>
+
+<!--
+object c'est la variable passée au context qui content nos objets. C'est le nom de var par def
+On peut aussi mettre nommodel_list (minuscule) ==> blogpost_list
+ou modifier dans notre class DetailView le context_object_name (ici post)
+
+-->
