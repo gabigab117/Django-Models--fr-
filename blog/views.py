@@ -1,9 +1,11 @@
 from django.shortcuts import render
+from django.urls import reverse, reverse_lazy
+
 from blog.models import BlogPost
 from blog.forms import BlogPostForm
 from datetime import datetime
 from django.http import HttpResponseRedirect
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 
 def blog_posts(request):
@@ -76,12 +78,16 @@ def blog_post_form(request):
             # blog_post = form.save(commit=False)
             # blog_post.published = True
             # blog_post.save()
-            # ou ne faire qu'un
+            # ou ne faire qu'un form.save(), sinon
+            form.instance.published = True
+            if request.user.is_authenticated:
+                form.instance.author = request.user
             form.save()
             # donc sans variable car on ne récupère pas l'objet pour le modif
             # pour éviter de re-soumettre le formulaire :
-            return HttpResponseRedirect(request.path)
+            # return HttpResponseRedirect(request.path)
             # path est un attribut qui correspond à l'url à laquelle je suis en train d'accéder
+            return HttpResponseRedirect(reverse("blog-index"))
     else:
         # on va passer des valeurs initiales au formulaire
         init_values = {}
@@ -91,3 +97,51 @@ def blog_post_form(request):
         form = BlogPostForm(initial=init_values)
 
     return render(request, 'blog/postform.html', context={"form": form})
+
+
+# class createview pour utiliser le formulaire
+class BlogPostCreateView(CreateView):
+    model = BlogPost
+    template_name = "blog/create_post.html"
+    # ici on utilise les champs du modele :
+    # fields = ['title', 'date', 'content']
+    # on va plutot utiliser le formulaire lié à notre modèle
+    form_class = BlogPostForm
+    # pour rediriger vers une url
+    # success_url = reverse_lazy("blog-index")
+    # ou utiliser la méthode get_success_url
+
+    def get_success_url(self):
+        return reverse('blog-index')
+
+    # modifier le formulaire avec une méthode form valid
+    # la méthode suivante vérifie déjà si le formulaire est valide
+
+    def form_valid(self, form):
+        if self.request.user.is_authenticated:
+            # l'instance du BlogPost
+            form.instance.author = self.request.user
+        form.instance.published = True
+        form.instance.date = datetime.today()
+        # on a modifié notre formulaire puis on le retourne a form_valid avec super
+
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["submit_text"] = "Créer"
+        return context
+
+
+# créer une vue d'édition
+class BlogPostUpdateView(UpdateView):
+    # pareil on spécifie le modèle, le template et quel form
+    model = BlogPost
+    template_name = "blog/create_post.html"
+    form_class = BlogPostForm
+    # on va modifier le context pour afficher modifier au lieu de créer dans le html
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["submit_text"] = "Modifier"
+        return context

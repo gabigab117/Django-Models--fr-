@@ -12,7 +12,8 @@ class BlogPostForm(forms.ModelForm):
             "author",
             "date",
             "category",
-            "description"
+            "description",
+            "content"
         ]
         # modifier les champs
         labels = {
