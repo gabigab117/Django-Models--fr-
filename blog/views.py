@@ -5,7 +5,7 @@ from blog.models import BlogPost
 from blog.forms import BlogPostForm
 from datetime import datetime
 from django.http import HttpResponseRedirect
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 
 def blog_posts(request):
@@ -145,3 +145,13 @@ class BlogPostUpdateView(UpdateView):
         context = super().get_context_data(**kwargs)
         context["submit_text"] = "Modifier"
         return context
+
+
+# vu pour supprimer une instance
+class BlogPostDeleteView(DeleteView):
+    model = BlogPost
+    template_name = "blog/delete_post.html"
+
+    def get_success_url(self):
+        # j'aurais pu faire un success_url = reverse_lazy
+        return reverse('blog-index')

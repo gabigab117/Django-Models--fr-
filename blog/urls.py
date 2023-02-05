@@ -1,6 +1,6 @@
 from django.urls import path
 from blog.views import blog_post, blog_posts, echappement, etendre, etendu, etendupost, blog_post_form, BlogIndexView,\
-    BlogPostDetailView, BlogPostCreateView, BlogPostUpdateView
+    BlogPostDetailView, BlogPostCreateView, BlogPostUpdateView, BlogPostDeleteView
 
 urlpatterns = [
     # path('', blog_posts, name="blog-index"),
@@ -15,6 +15,7 @@ urlpatterns = [
     # url pour DetailView qui remplace blog_post
     path('post-<str:slug>/', BlogPostDetailView.as_view(), name="blog-post"),
     path('post-<str:slug>/edit/', BlogPostUpdateView.as_view(), name="blog-post-edit"),
+    path('post-<str:slug>/delete/', BlogPostDeleteView.as_view(), name="supprimer-post"),
 
     # ci-dessous urls pour les forms
     path('article/', blog_post_form, name="blog-post-form")

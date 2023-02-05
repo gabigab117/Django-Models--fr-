@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Supprimer un article</title>
+</head>
+<body>
+
+<p><a href="{% url 'blog-index' %}">Retour au sommaire</a></p>
+
+<p>
+    <form method="POST">
+    {% csrf_token %}
+    <p>Voulez-vous supprimer "{{ blogpost.title }}" ?</p>
+    <input type="submit" value="Supprimer">
+</form>
+</p>
+</body>
+</html>
+
+<!--
+Accéder à l'objet avec :
+- nom du model en minuscule
+- ou ==> object
+Donc ici je peux faire object.title
+-->
